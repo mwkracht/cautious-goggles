@@ -1,6 +1,6 @@
 {
   "name": "foe-tools-extension",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Forge of Empires Browser Extension",
   "scripts": {
     "dev": "webpack --watch --config webpack/dev.config.js --progress --profile --colors --mode development",
@@ -74,12 +74,16 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.8",
     "autoprefixer": "^9.7.4",
+    "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
+    "datejs": "^1.0.0-rc3",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.17",
     "react-dock": "^0.2.4",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
+    "react-table": "^7.0.0-rc.16",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   }

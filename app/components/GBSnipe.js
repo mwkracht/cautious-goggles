@@ -22,11 +22,10 @@ export default class GBSnipe extends React.Component {
   calculateSnipe = (fpToNextLevel, fpPlacedByOwner, fpRewards, fpPlacedByOthers) => {
     let remainingFp = fpToNextLevel - fpPlacedByOwner - fpPlacedByOthers.reduce((a,b) => a + b, 0);
 
-    for (let i = 0; i < (fpRewards.length - 1); i++) {
+    for (let i = 0; i < fpRewards.length; i++) {
       let currRewards = fpRewards[i];
       let currRewardsBonus = Math.round(currRewards * this.state.arcBonus);
       let currPlaced = fpPlacedByOthers[0] || 0;
-      let nextPlaced = fpPlacedByOthers[1] || 0;
 
       if ( remainingFp <= currPlaced ) {
         fpPlacedByOthers = fpPlacedByOthers.slice(1);
@@ -56,7 +55,7 @@ export default class GBSnipe extends React.Component {
   render() {
     const {
       greatBuilding : { 
-        name, currentLevel, fpToNextLevel, fpPlacedByOwner, fpRewards, fpPlacedByOthers 
+        name, currentLevel, fpToNextLevel, fpPlacedByOwner, fpRewards, fpPlacedByOthers, ownerName 
       }
     } = this.props;
 
@@ -66,14 +65,9 @@ export default class GBSnipe extends React.Component {
       <div className="GBSnipe table-wrapper">
         <table className="table is-bordered is-striped is-narrow is-fullwidth">
           <thead>
-            {name ? (
-              <tr><th colSpan="4" className="has-text-centered"><p>{name}: {currentLevel} → {currentLevel + 1}</p></th></tr>
-            ) : (
-              <tr><th colSpan="4" className="has-text-centered"><p>No Building Selected</p></th></tr>
-            )}
             <tr>
               <th colSpan="3">Your Arc Bonus</th>
-              <td width="100px">
+              <td width="90px">
                 <ArcBonusInput arcBonus={this.state.arcBonus} updateArcBonus={this.handleArcBonusChange} id={0}/>
               </td>
             </tr>
@@ -81,15 +75,15 @@ export default class GBSnipe extends React.Component {
           {cost && (cost <= rewards) ? (
             <tbody>
               <tr>
-                <td colSpan="3">Forge Point Cost</td>
+                <td colSpan="3">FP Cost</td>
                 <td className="has-text-right">{cost}</td>
               </tr>
               <tr>
-                <td colSpan="3">Forge Point Rewards w/ Bonus</td>
+                <td colSpan="3">FP Earned</td>
                 <td className="has-text-right">{rewards}</td>
               </tr>
               <tr>
-                <th colSpan="3">Net:</th>
+                <th colSpan="3">Net</th>
                 <td className="has-text-right has-text-success">{rewards - cost}</td>
               </tr>
               <tr>

@@ -1,5 +1,6 @@
 'use strict';
 const greatBuildings = require('./background/great_buildings');
+const eventHistory = require('./background/event_history');
 
 
 chrome.runtime.onInstalled.addListener(function() {
@@ -39,6 +40,13 @@ chrome.runtime.onMessageExternal.addListener(
               break;
           }
           break;
+        case 'OtherPlayerService':
+          switch(response.requestMethod) {
+            case 'getEventsPaginated':
+              eventHistory.new_page(response.responseData);
+              break;
+          }
+          break;
       }
     }
   }
@@ -49,7 +57,7 @@ chrome.pageAction.onClicked.addListener(function () {
   chrome.windows.create({
     url: chrome.runtime.getURL('popup.html'),
     type: 'panel',
-    width: 500,
+    width: 320,
     height: 800,
   });
 });

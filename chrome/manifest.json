@@ -1,6 +1,6 @@
 {
   "name": "FOE Tools Extension",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Supplemental UI Views for Forge of Empires",
   "permissions": [
     "activeTab",
@@ -43,6 +43,6 @@
     "48": "img/get_started48.png",
     "128": "img/get_started128.png"
   },
-  "content_security_policy": "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src * 'unsafe-inline' 'self' blob:; font-src 'self' https://cdnjs.cloudflare.com https://netdna.bootstrapcdn.com; img-src 'self' data:; connect-src ws://localhost:8000;",
+  "content_security_policy": "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src * 'unsafe-inline' 'self' blob:; font-src 'self' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com; img-src 'self' data:; connect-src ws://localhost:8000;",
   "manifest_version": 2
 }

@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import GBInvestment from './GBInvestment';
-import GBSnipe from './GBSnipe';
+import GBMain from './GBMain';
+import Motivations from './Motivations';
 import PropTypes from 'prop-types';
+import { Tab, Tabs } from 'react-bootstrap';
 
 export default class MainSection extends Component {
 
   render() {
     return (
       <div className="MainSection">
-        <h4 className="title is-4 has-text-centered" style={{'margin': '0 auto'}}>Invest</h4>
-        <GBInvestment />
-        <h4 className="title is-4 has-text-centered" style={{'margin': '0 auto'}}>Snipe</h4>
-        <GBSnipe />
+        <Tabs defaultActiveKey="greatbuilding" id="top-level-tabs">
+          <Tab eventKey="greatbuilding" title="GB">
+            <GBMain />
+          </Tab>
+          <Tab eventKey="motivation" title="Motivations">
+            <Motivations />
+          </Tab>
+        </Tabs>
       </div>
     );
   }

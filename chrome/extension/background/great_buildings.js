@@ -10,7 +10,9 @@ const newFocusedGB = () => {
     fpRewards: [],          // stage_2
     fpToNextLevel: null,    // stage_1
     fpPlacedByOwner: null,  // stage_2
-    fpPlacedByOthers: [],   // stage_2  
+    fpPlacedByOthers: [],   // stage_2 
+    ownerId: null,          // stage_1
+    ownerName: null         // stage_2
   }
 }
 
@@ -32,29 +34,29 @@ const greatBuildIDtoName = (id) => {
     X_ColonialAge_Landmark1: 'Frauenkirche of Dresden',
     X_ColonialAge_Landmark2: 'Deal Castle',
     X_IndustrialAge_Landmark1: 'Royal Albert Hall',
-    X_IndustrialAge_Landmark2: 'Captiol',
+    X_IndustrialAge_Landmark2: 'Capitol',
     X_ProgressiveEra_Landmark1: 'Alcatraz',
     X_ProgressiveEra_Landmark2: 'Château Frontenac',
     X_ModernEra_Landmark1: 'Space Needle',
     X_ModernEra_Landmark2: 'Atomium',
     X_PostModernEra_Landmark1: 'Cape Canaveral',
-    X_PostModernEra_Landmark2: 'The Habitat',
+    X_PostModernEra_Landmark2: 'Habitat',
     X_ContemporaryEra_Landmark1: 'Lotus Temple',
     X_ContemporaryEra_Landmark2: 'Innovation Tower',
     X_TomorrowEra_Landmark1: 'Voyager V1',
     X_TomorrowEra_Landmark2: 'Dynamic Tower',
-    X_FutureEra_Landmark1: 'The Arc',
+    X_FutureEra_Landmark1: 'Arc',
     X_FutureEra_Landmark2: 'Rain Forest Project',
     X_ArcticFuture_Landmark1: 'Gaea Statue',
     X_ArcticFuture_Landmark2: 'Arctic Orangery',
     X_ArcticFuture_Landmark3: 'Seed Vault',
     X_OceanicFuture_Landmark1: 'Atlantis Museum',
-    X_OceanicFuture_Landmark2: 'The Kraken',
-    X_OceanicFuture_Landmark3: 'The Blue Galaxy',
+    X_OceanicFuture_Landmark2: 'Kraken',
+    X_OceanicFuture_Landmark3: 'Blue Galaxy',
     X_VirtualFuture_Landmark1: 'Terracotta Army',
     X_VirtualFuture_Landmark2: 'Himeji Castle',
     X_SpaceAgeMars_Landmark1: 'Star Gazer',
-    X_SpaceAgeMars_Landmark2: 'The Virgo Project',
+    X_SpaceAgeMars_Landmark2: 'Virgo Project',
   }
 
   return mapping[id] || 'Unknown';
@@ -63,16 +65,18 @@ const greatBuildIDtoName = (id) => {
 
 export function great_building_view_stage_1(data) {
   focusedGB = newFocusedGB();
-  focusedGB.name = greatBuildIDtoName(data[0]['cityentity_id']);
-  focusedGB.currentLevel = data[0]['level'];
-  focusedGB.fpToNextLevel = data[0]['state']['forge_points_for_level_up'];
+  focusedGB.name = greatBuildIDtoName(data[0].cityentity_id);
+  focusedGB.currentLevel = data[0].level;
+  focusedGB.fpToNextLevel = data[0].state.forge_points_for_level_up;
+  focusedGB.ownerId = data[0].player_id
 }
 
 
 export function great_building_view_stage_2(data) {
   for (let i = 0; i < data.rankings.length; i++) {
-    if (typeof data.rankings[i].reward === "undefined") {
+    if (data.rankings[i].player && data.rankings[i].player.player_id === focusedGB.ownerId) {
       focusedGB.fpPlacedByOwner = data.rankings[i].forge_points;
+      focusedGB.ownerName = data.rankings[i].player.name;
     } else {
       if (typeof data.rankings[i].forge_points !== "undefined") {
         focusedGB.fpPlacedByOthers.push(data.rankings[i].forge_points);

@@ -4,6 +4,16 @@ import update from 'react-addons-update';
 import NetForgePoints from "./NetForgePoints";
 import ArcBonusInput from "./ArcBonusInput";
 import { connect } from 'react-redux';
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const SmallFAIcon = ({ className, fa }) => {
+  return (
+    <span className={className + " icon is-small"} style={{verticalAlign: "middle"}}>
+      <FontAwesomeIcon icon={fa} />
+    </span>
+  )
+}
 
 @connect(
   state => ({
@@ -23,20 +33,27 @@ export default class GBInvestment extends React.Component {
   renderRow = (_row, rowIndex) => {
     const { rewards, rewardsBonus, fpToSecure, fpForSpot, isPlaced } = _row;
 
+    function LockCell(props) {
+      const { fpToSecure, rewards } = props;
+      if (rewards === 0) {
+        return <td className="has-text-right">--</td>;
+      } else if (fpToSecure) {
+        return (<td className="has-text-right has-text-danger">{fpToSecure}</td>);
+      } else if (rewards) {
+        return <td className="has-text-right has-text-success"><SmallFAIcon fa={faLock} /></td>;
+      }
+    }
+
     return (
       <tr key={`row-${rowIndex}`}>
         <td className="has-text-right">{rowIndex + 1}</td>
         <td className="has-text-right">{rewards}</td>
         <td className="has-text-right">{rewardsBonus}</td>
-        {fpToSecure ? (
-          <td className="has-text-right has-text-danger">{fpToSecure}</td>
-        ) : (
-          <td className="has-text-right has-text-success">Secured</td>
-        )}
+        <LockCell fpToSecure={fpToSecure} rewards={rewards} />
         <td className="has-text-right">
           <NetForgePoints required={rewardsBonus} placed={isPlaced ? fpForSpot : 0} />
         </td>
-        <td width="100px">
+        <td>
           {rowIndex < 5 &&
             <ArcBonusInput arcBonus={this.state.arcBonuses[rowIndex]}
                            updateArcBonus={this.handleArcBonusChange}
@@ -146,7 +163,7 @@ export default class GBInvestment extends React.Component {
   render() {
     const {
       greatBuilding : { 
-        name, currentLevel, fpToNextLevel, fpPlacedByOwner, fpRewards, fpPlacedByOthers 
+        name, currentLevel, fpToNextLevel, fpPlacedByOwner, fpRewards, fpPlacedByOthers, ownerName
       }
     } = this.props;
 
@@ -160,11 +177,6 @@ export default class GBInvestment extends React.Component {
       <div className="GBInvestment table-wrapper">
         <table className="table is-bordered is-striped is-narrow is-fullwidth">
           <thead>
-            {name ? (
-              <tr><th colSpan="6" className="has-text-centered"><p>{name}: {currentLevel} → {currentLevel + 1}</p></th></tr>
-            ) : (
-              <tr><th colSpan="6" className="has-text-centered"><p>No Building Selected</p></th></tr>
-            )}
             <tr>
               <th colSpan="6" className="has-text-centered">
                 <progress max={fpToNextLevel} className="progress is-success" value={totalFpPlaced} style={{marginBottom: "0px"}}></progress>
@@ -173,17 +185,16 @@ export default class GBInvestment extends React.Component {
             </tr>
             <tr>
               <th colSpan="5">Global Arc Bonus</th>
-              <td width="100px">
+              <td>
                 <ArcBonusInput arcBonus={this.state.arcBonuses[5]} updateArcBonus={this.handleArcBonusChange} id={5}/>
               </td>
             </tr>
             <tr>
-              <th>Spot</th>
-              <th>Rewards</th>
-              <th width="80px">w/ Bonus</th>
-              <th>FP to Secure</th>
-              <th>Placed FP</th>
-              <th width="100px">Arc Bonus</th>
+              <th colSpan="1" />
+              <th colSpan="2">Rewards</th>
+              <th>Lock</th>
+              <th>Placed</th>
+              <th width="65px">Arc</th>
             </tr>
           </thead>
           <tbody>{tbodyMarkup}</tbody>

@@ -1,15 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faArrowUp, faArrowDown, faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const SmallFAIcon = ({ className, fa }) => {
-  return (
-    <span className={className + " icon is-small"} style={{verticalAlign: "middle"}}>
-      <FontAwesomeIcon icon={fa} />
-    </span>
-  )
-}
 
 const NetForgePoints = ({ required, placed }) => {
   const difference = required - placed;
@@ -18,7 +8,7 @@ const NetForgePoints = ({ required, placed }) => {
 
   if (difference === 0) {
     return (
-      <p>{placed} (<SmallFAIcon fa={faExchangeAlt} />)</p>
+      <p>{placed}</p>
     )
   } else if (placed === 0 || placed == null) {
     return (
@@ -26,11 +16,11 @@ const NetForgePoints = ({ required, placed }) => {
     )
   } else if (difference < 0) {
     return (
-      <p>{placed} (<SmallFAIcon className={negClass} fa={faArrowUp} />{Math.abs(difference)})</p>
+      <p>{placed} (<span className={negClass}>{Math.abs(difference)}</span>)</p>
     )
   } else {
     return (
-      <p>{placed} (<SmallFAIcon className={posClass} fa={faArrowDown} />{difference})</p>
+      <p>{placed} (<span className={posClass}>{difference}</span>)</p>
     )
   }
 }

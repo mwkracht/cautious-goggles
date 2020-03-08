@@ -45,8 +45,7 @@ module.exports = (env, argv) => {
         use: [
           'style-loader',
           'css-loader'
-        ],
-        exclude: /node_modules/
+        ]
       }, {
           test: /\.pug$/,
           use: 'pug-loader'

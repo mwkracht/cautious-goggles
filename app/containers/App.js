@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import MainSection from '../components/MainSection';
 
 export default class App extends Component {
