@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import GBInvestment from './GBInvestment';
 import GBMain from './GBMain';
+import Incidents from './Incidents';
 import Motivations from './Motivations';
 import PropTypes from 'prop-types';
 import { Tab, Tabs } from 'react-bootstrap';
@@ -16,6 +16,9 @@ export default class MainSection extends Component {
           </Tab>
           <Tab eventKey="motivation" title="Motivations">
             <Motivations />
+          </Tab>
+          <Tab eventKey="incidents" title="Incidents">
+            <Incidents />
           </Tab>
         </Tabs>
       </div>

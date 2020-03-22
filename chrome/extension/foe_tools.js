@@ -19,7 +19,8 @@ chrome.extension.onMessage.addListener(
 
 chrome.storage.local.get('state', (obj) => {
   const { state } = obj;
-  const initialState = JSON.parse(state || '{}');
+  const initialState = JSON.parse(state || '{}')
+
   store = createStore(initialState)
 
   ReactDOM.render(

@@ -1,6 +1,6 @@
 {
   "name": "FOE Tools Extension",
-  "version": "0.2",
+  "version": "0.3",
   "description": "Supplemental UI Views for Forge of Empires",
   "permissions": [
     "activeTab",

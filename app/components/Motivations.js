@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useFilters, useGlobalFilters, useTable, useSortBy } from 'react-table'
 import * as MotivationActions from '../actions/motivations';
+import PageTitle from './PageTitle';
 
 
 function SelectColumnFilter({
@@ -127,22 +128,10 @@ export default class Motivations extends Component {
     actions: PropTypes.object.isRequired
   };
 
-  state = {
-    helpOpen: false
-  };
-
   handleClear = () => {
     const { motivations, actions } = this.props;
     actions.clearMotivations();
   };
-
-  handleHelpClick = (e) => {
-    e.preventDefault();
-
-    this.setState({
-      helpOpen: ! this.state.helpOpen
-    })
-  }
 
   mapData = (motivations) => {
     let results = {
@@ -228,18 +217,13 @@ export default class Motivations extends Component {
     return (
       <div className="Motivations">
         <div className='mt-4 mb-4 text-center'>
-          <h5 className='mb-0'>Motivations</h5>
-          <div className='small mb-2'>
-            <a href="#" onClick={this.handleHelpClick}>{this.state.helpOpen ? 'hide' : 'show'} help</a>
-          </div>
-          {this.state.helpOpen && 
-            <p className='mb-2 small'>
-              In order to populate motivations table click on your Town Hall, open the News
+          <PageTitle
+              title='Motivations'
+              help='In order to populate motivations table click on your Town Hall, open the News
               tab, and click Event History. The motivations on the current Event History page should
               populate into the table. To populate more motivations, continue clicking through the
-              remainder of Event History pages.
-            </p>
-          }
+              remainder of Event History pages.'
+          />
           {data.length > 0 && (
             <table className="table is-bordered is-striped is-narrow">
               <tbody>

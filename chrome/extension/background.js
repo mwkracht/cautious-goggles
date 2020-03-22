@@ -1,6 +1,7 @@
 'use strict';
-const greatBuildings = require('./background/great_buildings');
+const cityMap = require('./background/city_map');
 const eventHistory = require('./background/event_history');
+const greatBuildings = require('./background/great_buildings');
 
 
 chrome.runtime.onInstalled.addListener(function() {
@@ -47,6 +48,12 @@ chrome.runtime.onMessageExternal.addListener(
               break;
           }
           break;
+        case 'HiddenRewardService':
+          switch(response.requestMethod) {
+            case 'getOverview':
+              cityMap.newIncidents(response.responseData);
+              break;
+          }
       }
     }
   }
